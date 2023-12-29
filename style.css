@@ -33,3 +33,63 @@ body {
 #scoreBoard p {
     font-size: 1.1em;
 }
+
+/* Stelle sicher, dass dieser Code zu deiner vorhandenen style.css Datei hinzugefügt wird. */
+
+.language-selection {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.language-button {
+    border: none;
+    border-radius: 5px; /* leicht abgerundete Ecken */
+    margin: 0 10px; /* Abstand zwischen den Buttons */
+    width: 50px; /* Breite der Flaggen-Buttons */
+    height: 30px; /* Höhe der Flaggen-Buttons */
+    cursor: pointer; /* Cursor ändern, wenn man über den Button hovert */
+    background-size: cover; /* sorgt dafür, dass die Flaggen das gesamte Element ausfüllen */
+}
+
+.language-button img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+/* CSS für die Schriftgrößen */
+h1 {
+    font-size: 24px; /* oder eine andere Größe nach Wunsch */
+    margin-bottom: 15px;
+}
+
+#wordDisplay {
+    font-size: 32px; /* Größe für das angezeigte Wort */
+    margin-bottom: 20px;
+}
+
+#userInput {
+    font-size: 20px; /* Größe für das Eingabefeld */
+    margin-bottom: 10px;
+}
+
+#scoreBoard p {
+    font-size: 18px; /* Größe für den Punktestand */
+}
+
+/* Responsive Design für kleinere Bildschirme */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 20px;
+    }
+    #wordDisplay {
+        font-size: 28px;
+    }
+    #userInput {
+        font-size: 18px;
+    }
+    #scoreBoard p {
+        font-size: 16px;
+    }
+}
