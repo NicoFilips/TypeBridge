@@ -7,12 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Container für Partikel-Hintergrund -->
+
     <div class="container">
         <div class="language-selection">
             <button id="russianLanguage" class="language-button" title="Use Russian keyboard layout">
                 <img src="./src/Flag_of_Russia.png" alt="Russian">
             </button>
-            <button id="ukrainianLanguage" class="language-button" title="Use ukrainian keyboard layout">
+            <button id="ukrainianLanguage" class="language-button" title="Use Ukrainian keyboard layout">
                 <img src="./src/Flag_of_Ukraine.png" alt="Ukrainian">
             </button>
         </div>
@@ -26,6 +28,13 @@
             <p>Falsch / неправильный: <span id="incorrectCount">0</span></p>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="script.js"></script>
+    <script>
+        particlesJS.load('particles-js', 'particles.json', function() {
+            console.log('callback - particles.js config loaded');
+        });
+    </script>
 </body>
 </html>
+

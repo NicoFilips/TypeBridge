@@ -150,10 +150,10 @@ body {
 }
 
 .ukrainian-background {
-    background: linear-gradient(-45deg,
+    background: linear-gradient(-225deg,
         #0057b7 35%, /* Blau bis zur Hälfte */
         #ffd700 65%); /* Gelb ab der Hälfte */
-    background-size: 200% 200%;
+    background-size: 150% 150%;
     animation: ukrainianGradientAnimation 15s ease infinite;
 }
 
@@ -164,10 +164,21 @@ body {
 }
 
 .russian-background {
-    background: linear-gradient(-45deg,
-        #ffffff 20%,
-        #0033a0 40% 60%,
-        #d52b1e 80%);
-    background-size: 200% 200%;
+    background: linear-gradient(45deg,
+    #ffffff 20%,
+    #0033a0 45% 55%,
+    #d52b1e 80%);
+    background-size: 150% 150%;
     animation: russianGradientAnimation 15s ease infinite;
 }
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #b61924; /* Oder eine andere Hintergrundfarbe nach Wahl */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+    z-index: -1; /* Stellt sicher, dass es hinter deinem Inhalt liegt */
+  }
