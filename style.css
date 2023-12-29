@@ -115,6 +115,15 @@ body {
     padding: 20px;
     border-radius: 10px; /* leicht abgerundete Ecken für den Container */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für den Container */
+    max-width: 800px; /* Maximale Breite des Containers */
+    margin: 0 auto; /* Zentriert den Container horizontal */
+    width: 100%; /* Breite des Containers */
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px; /* Weniger Padding auf kleineren Bildschirmen */
+    }
 }
 
 
@@ -164,7 +173,7 @@ body {
 }
 
 .russian-background {
-    background: linear-gradient(45deg,
+    background: linear-gradient(225deg,
     #ffffff 20%,
     #0033a0 45% 55%,
     #d52b1e 80%);
