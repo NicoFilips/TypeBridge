@@ -116,3 +116,58 @@ body {
     border-radius: 10px; /* leicht abgerundete Ecken für den Container */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für den Container */
 }
+
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+body {
+    background: linear-gradient(-45deg, #84fab0, #8fd3f4, #a18cd1, #fbc2eb);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8); /* leicht transparenter Weiß für den Container */
+    padding: 20px;
+    border-radius: 10px; /* leicht abgerundete Ecken für den Container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für den Container */
+}
+
+@keyframes ukrainianGradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.ukrainian-background {
+    background: linear-gradient(-45deg,
+        #0057b7 35%, /* Blau bis zur Hälfte */
+        #ffd700 65%); /* Gelb ab der Hälfte */
+    background-size: 200% 200%;
+    animation: ukrainianGradientAnimation 15s ease infinite;
+}
+
+@keyframes russianGradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.russian-background {
+    background: linear-gradient(-45deg,
+        #ffffff 20%,
+        #0033a0 40% 60%,
+        #d52b1e 80%);
+    background-size: 200% 200%;
+    animation: russianGradientAnimation 15s ease infinite;
+}

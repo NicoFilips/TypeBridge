@@ -47,4 +47,13 @@ userInput.addEventListener('input', () => {
     displayNewLetter();
 });
 
+document.getElementById('russianLanguage').addEventListener('click', function() {
+    document.body.className = 'russian-background'; // Setzt die Klasse auf russische Farben
+});
+
+document.getElementById('ukrainianLanguage').addEventListener('click', function() {
+    document.body.className = 'ukrainian-background'; // Setzt die Klasse auf ukrainische Farben
+});
+
+
 displayNewLetter();
