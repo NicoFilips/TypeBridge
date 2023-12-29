@@ -93,3 +93,26 @@ h1 {
         font-size: 16px;
     }
 }
+
+@keyframes backgroundAnimation {
+    0% {
+        background-color: #f0f0f0;
+    }
+    50% {
+        background-color: #e0e0e0;
+    }
+    100% {
+        background-color: #f0f0f0;
+    }
+}
+
+body {
+    animation: backgroundAnimation 10s infinite;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8); /* leicht transparenter Weiß für den Container */
+    padding: 20px;
+    border-radius: 10px; /* leicht abgerundete Ecken für den Container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für den Container */
+}
