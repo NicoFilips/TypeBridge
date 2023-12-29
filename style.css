@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.container {
+    text-align: center;
+}
+
+#wordDisplay {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#userInput {
+    font-size: 1.5em;
+    padding: 10px;
+}
+
+#feedback {
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+#scoreBoard {
+    margin-top: 20px;
+}
+
+#scoreBoard p {
+    font-size: 1.1em;
+}
