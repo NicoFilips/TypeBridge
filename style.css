@@ -191,3 +191,27 @@ body {
     background-position: 50% 50%;
     z-index: -1; /* Stellt sicher, dass es hinter deinem Inhalt liegt */
   }
+
+
+  #controls {
+    display: flex; /* Aktiviert Flexbox */
+    align-items: center; /* Zentriert die Elemente vertikal */
+    justify-content: space-around; /* Verteilt die Elemente gleichmäßig im Container */
+}
+
+#wordDisplay {
+    margin-right: 10px; /* Fügt einen rechten Abstand zum Button hinzu */
+}
+
+
+#toggleLayout {
+    padding: 5px 10px; /* Fügt Innenabstand hinzu */
+    border: none; /* Entfernt den Standardrahmen */
+    background-color: #4CAF50; /* Hintergrundfarbe */
+    color: white; /* Textfarbe */
+    cursor: pointer; /* Ändert den Mauszeiger, um Klickbarkeit anzuzeigen */
+}
+
+#toggleLayout:hover {
+    background-color: #45a049; /* Dunklere Hintergrundfarbe beim Hover */
+}

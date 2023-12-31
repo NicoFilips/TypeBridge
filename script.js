@@ -41,13 +41,24 @@ const correctCountEl = document.getElementById("correctCount");
 const incorrectCountEl = document.getElementById("incorrectCount");
 const feedback = document.getElementById("feedback");
 
+function createReverseMapping(mapping) {
+    let reverseMapping = {};
+    for (let key in mapping) {
+        let value = mapping[key];
+        reverseMapping[value] = key;
+    }
+    return reverseMapping;
+}
+
+const cyrillicToQwertz = createReverseMapping(qwertzToCyrillic);
+
 function getRandomLetter() {
-    if (currentLanguage === 'russian') {
-        console.log('a');
-        return kyrillischeBuchstaben[Math.floor(Math.random() * kyrillischeBuchstaben.length)];
-    } else if (currentLanguage === 'ukrainian') {
-        console.log('b');
-        return ukrainischeBuchstaben[Math.floor(Math.random() * kyrillischeBuchstaben.length)];
+    if (currentLanguage === 'Russian') {
+        let letter = kyrillischeBuchstaben[Math.floor(Math.random() * kyrillischeBuchstaben.length)];
+        return cyrillicToQwertz[letter] || letter; // Fallback auf den ursprünglichen Buchstaben, falls keine Zuordnung vorhanden ist
+    } else if (currentLanguage === 'Ukrainian') {
+        let letter = ukrainischeBuchstaben[Math.floor(Math.random() * ukrainischeBuchstaben.length)];
+        return cyrillicToQwertz[letter] || letter; // Hier müssten Sie das gleiche für das ukrainische Layout tun
     }
 }
 
@@ -55,14 +66,15 @@ function displayNewLetter() {
     wordDisplay.innerText = getRandomLetter();
 }
 
-let currentLanguage = 'russian';
+let currentLanguage = 'Russian';
+let header = document.getElementById('headerTitle');
 
 userInput.addEventListener('input', () => {
     let lastChar = userInput.value.slice(-1).toUpperCase();
     let cyrillicChar;
-    if (currentLanguage === 'russian') {
+    if (currentLanguage === 'Russian') {
         cyrillicChar = qwertzToCyrillic[lastChar];
-    } else if (currentLanguage === 'ukrainian') {
+    } else if (currentLanguage === 'Ukrainian') {
         cyrillicChar = qwertzToUkrainian[lastChar];
     }
 
@@ -107,11 +119,36 @@ displayNewLetter();
 
 
 document.getElementById('russianLanguage').addEventListener('click', function() {
-    currentLanguage = 'russian';
-    // Weitere Logik für Sprachwechsel...
+    currentLanguage = 'Russian';
+    header.textContent = 'Практикуйте свои навыки раскладки клавиатуры!';
+    unlockAndFocusTextbox();
 });
 
 document.getElementById('ukrainianLanguage').addEventListener('click', function() {
-    currentLanguage = 'ukrainian';
-    // Weitere Logik für Sprachwechsel...
+    currentLanguage = 'Ukrainian';
+    header.textContent = 'Практикуйте свої навички клавіатури!';
+    unlockAndFocusTextbox();
 });
+
+
+let isLayoutSwapped = false;
+
+document.getElementById('toggleLayout').addEventListener('click', function() {
+    isLayoutSwapped = !isLayoutSwapped; // Wechselt den Status bei jedem Klick
+    updateLayoutButtonLabel();
+    displayNewLetter();
+});
+
+function updateLayoutButtonLabel() {
+    document.getElementById('toggleLayout').textContent = isLayoutSwapped ? 'German Layout' : currentLanguage + " Layout";
+}
+
+updateLayoutButtonLabel();
+
+function unlockAndFocusTextbox() {
+    var layoutInput = document.getElementById('toggleLayout');
+    layoutInput.disabled = false;
+    var textInput = document.getElementById('userInput');
+    textInput.disabled = false; // Textbox entsperren
+    textInput.focus(); // Fokus auf die Textbox setzen
+}

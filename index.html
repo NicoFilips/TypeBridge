@@ -18,11 +18,14 @@
                 <img src="./src/Flag_of_Ukraine.png" alt="Ukrainian">
             </button>
         </div>
+        <div>
+            <button id="toggleLayout" title="Select the keyboard Layout which you are currently typing on" disabled >Choose your layout</button>
+        </div>
         <h1>Practice your Keyboard layout skills!</h1>
-        <h1>Практикуйте свои навыки раскладки клавиатуры!</h1>
+        <h1 id="headerTitle">Практикуйте свои навыки раскладки клавиатуры!</h1>
         <div id="wordDisplay"></div>
-        <input type="text" id="userInput" autofocus />
-        <div id="feedback"></div>
+        <input type="text" id="userInput" disabled />
+            <div id="feedback"></div>
         <div id="scoreBoard">
             <p>Korrekt / правильно: <span id="correctCount">0</span></p>
             <p>Falsch / неправильный: <span id="incorrectCount">0</span></p>
