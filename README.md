@@ -1,7 +1,7 @@
 
 <div align="center">
 <a href="https://github.com/NicoFilips/TypeBridge/">
-  <img src="https://user-images.githubusercontent.com/35654361/283991168-b9359637-ccda-49d5-b86e-2547af316b3c.png" alt="Logo" width="200" height="200">
+  <img src="https://user-images.githubusercontent.com/35654361/293506140-10e8bbce-118b-4096-9a98-35ea8af3a940.png" alt="Logo" width="200" height="200">
 </a>
 
 
