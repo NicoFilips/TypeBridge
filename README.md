@@ -8,29 +8,29 @@
 </blockquote>
 
 
-## About the App
+## About the App 📖
 
-This app is designed to help native speakers of Russian and Ukrainian as well as German speakers learn each other's keyboard layouts. It's particularly useful for those who have recently arrived in Germany and wish to familiarize themselves with the Latin keyboard layout, or for Germans looking to learn the Cyrillic layout.
+This app is designed to help native speakers of Russian 🇷🇺 and Ukrainian 🇺🇦 as well as German speakers 🇩🇪 learn each other's keyboard layouts. It's particularly useful for those who have recently arrived in Germany and wish to familiarize themselves with the Latin keyboard layout, or for Germans looking to learn the Cyrillic layout.
 
-## Features
+## Features 🚀
 
-- **Language Selection:** Choose between Russian, Ukrainian, and German to practice the corresponding keyboard layout.
-- **Interactive Training:** Receive immediate visual feedback for each keyboard input, whether correct or incorrect.
-- **Progress Tracking:** Keep an eye on your statistics for right and wrong answers.
-- **Responsive Design:** Learn on any device, whether it's a desktop, tablet, or smartphone.
+- **Language Selection** 🌍: Choose between Russian, Ukrainian, and German to practice the corresponding keyboard layout.
+- **Interactive Training** 💡: Receive immediate visual feedback for each keyboard input, whether correct or incorrect.
+- **Progress Tracking** 📈: Keep an eye on your statistics for right and wrong answers.
+- **Responsive Design** 📱: Learn on any device, whether it's a desktop, tablet, or smartphone.
 
-## Getting Started
+## Getting Started 🏁
 
 Visit our website and start practicing right away! Select your language and follow the on-screen instructions.
 
-## Support
+## Support 🆘
 
 If you have any questions or need assistance, [open an issue](link-to-issues) on our GitHub page.
 
-## Contributing
+## Contributing 👥
 
 If you would like to contribute to the app, please check out our [Contributing Guidelines](link-to-CONTRIBUTING.md).
 
-## License
+## License 📄
 
 This app is released under the [MIT License](link-to-LICENSE).
