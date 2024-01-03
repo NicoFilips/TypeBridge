@@ -39,6 +39,8 @@ const wordDisplay = document.getElementById("wordDisplay");
 const userInput = document.getElementById("userInput");
 const correctCountEl = document.getElementById("correctCount");
 const incorrectCountEl = document.getElementById("incorrectCount");
+let correctCountLabel = document.getElementById("correctLabel")
+let incorrectCountLabel = document.getElementById("incorrectLabel")
 const feedback = document.getElementById("feedback");
 
 function createReverseMapping(mapping) {
@@ -121,12 +123,16 @@ displayNewLetter();
 document.getElementById('russianLanguage').addEventListener('click', function() {
     currentLanguage = 'Russian';
     header.textContent = 'Практикуйте свои навыки раскладки клавиатуры!';
+    correctCountLabel.textContent = 'правильные:';
+    incorrectCountLabel.textContent = 'неправильные:';
     unlockAndFocusTextbox();
 });
 
 document.getElementById('ukrainianLanguage').addEventListener('click', function() {
     currentLanguage = 'Ukrainian';
     header.textContent = 'Практикуйте свої навички клавіатури!';
+    correctCountLabel.textContent = 'правильно:';
+    incorrectCountLabel.textContent = 'неправильно:';
     unlockAndFocusTextbox();
 });
 
