@@ -7,10 +7,6 @@ body {
     background-color: #f0f0f0;
 }
 
-.container {
-    text-align: center;
-}
-
 #wordDisplay {
     font-size: 2em;
     margin-bottom: 20px;
@@ -116,15 +112,20 @@ body {
     border-radius: 10px; /* leicht abgerundete Ecken für den Container */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für den Container */
     max-width: 800px; /* Maximale Breite des Containers */
-    margin: 0 auto; /* Zentriert den Container horizontal */
-    width: 100%; /* Breite des Containers */
+    margin: 20px auto; /* Zentriert den Container horizontal und gibt mindestens 20px Abstand nach oben und unten */
+    width: calc(100% - 40px); /* Breite des Containers minus 40px für den Abstand links und rechts */
+    text-align: center;
+    border: 1px solid gray; /* Schwarzer Rand um den Container */
 }
 
 @media (max-width: 600px) {
     .container {
         padding: 10px; /* Weniger Padding auf kleineren Bildschirmen */
+        margin: 10px auto; /* Weniger Abstand auf kleineren Bildschirmen */
+        width: calc(100% - 20px); /* Anpassung der Breite auf kleineren Bildschirmen */
     }
 }
+
 
 
 @keyframes gradientAnimation {
@@ -143,13 +144,6 @@ body {
     background: linear-gradient(-45deg, #84fab0, #8fd3f4, #a18cd1, #fbc2eb);
     background-size: 400% 400%;
     animation: gradientAnimation 15s ease infinite;
-}
-
-.container {
-    background-color: rgba(255, 255, 255, 0.8); /* leicht transparenter Weiß für den Container */
-    padding: 20px;
-    border-radius: 10px; /* leicht abgerundete Ecken für den Container */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für den Container */
 }
 
 @keyframes ukrainianGradientAnimation {
@@ -214,4 +208,65 @@ body {
 
 #toggleLayout:hover {
     background-color: #45a049; /* Dunklere Hintergrundfarbe beim Hover */
+}
+
+.overlay-container {
+    position: relative;
+    width: 100%; /* oder eine spezifische Breite */
+    height: 100%; /* oder eine spezifische Höhe */
+}
+
+.overlay-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Stellen Sie sicher, dass es die gesamte Containerbreite einnimmt */
+    height: 100%; /* Optional, je nach Bedarf */
+    /* Weitere Stilisierung nach Bedarf */
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Abstand zwischen den Buttons */
+}
+
+.game-button {
+    background-color: #3c59b8; /* Grüne Hintergrundfarbe */
+    color: white; /* Weiße Textfarbe */
+    border: none; /* Keine Grenze */
+    padding: 15px 32px; /* Vertikales und horizontales Padding */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s; /* Animationsdauer für den Hover-Effekt */
+    cursor: pointer; /* Cursor als Zeiger */
+    border-radius: 5px; /* Leicht abgerundete Ecken */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Leichter Schatten für Tiefe */
+}
+
+.game-button:hover {
+    background-color: white; /* Hintergrundfarbe beim Hover */
+    color: #3c59b8; /* Textfarbe beim Hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Stärkerer Schatten beim Hover */
+}
+
+.game-button.active {
+    background-color: #8fd3f4; /* Dunklere Hintergrundfarbe für den aktiven Button */
+    color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset; /* Innen-Schatten für den eingedrückten Effekt */
+}
+
+.timer {
+    font-size: 2em; /* Große Schrift für den Timer */
+    margin: 20px; /* Etwas Abstand um den Timer */
+    padding: 10px;
+    background: #ddd; /* Hintergrundfarbe */
+    border-radius: 5px; /* Abgerundete Ecken */
+    display: inline-block;
+    width: 100px; /* Breite des Timer-Elements */
+    text-align: center;
 }

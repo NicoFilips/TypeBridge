@@ -10,6 +10,7 @@
     <!-- Container für Partikel-Hintergrund -->
 
     <div class="container">
+    <div class="container">
         <div class="language-selection">
             <button id="russianLanguage" class="language-button" title="Use Russian keyboard layout">
                 <img src="./src/Flag_of_Russia.png" alt="Russian">
@@ -21,16 +22,34 @@
         <div>
             <button id="toggleLayout" title="Select the keyboard Layout which you are currently typing on" disabled >Choose your layout</button>
         </div>
+        <div>
+            <button class="game-button" id="oneMinuteMode">1 min. mode</button>
+            <button class="game-button" id="freeplayMode">Freeplay mode</button>
+            <button class="game-button" id="freeplayMode2">Custom mode</button>
+            <div id="timer" class="timer">
+                01:00
+            </div>                
+        </div>
+        
+    </div>
+    <div class="container">
         <h1>Practice your Keyboard layout skills!</h1>
         <h1 id="headerTitle">Практикуйте свои навыки раскладки клавиатуры!</h1>
         <div id="wordDisplay"></div>
-        <input type="text" id="userInput" disabled />
+        <input type="text" disabled="true" id="userInput"/>
             <div id="feedback"></div>
         <div id="scoreBoard">
-            <p id="correctLabel">Correct: <span id="correctCount">0</span></p>
-            <p id="incorrectLabel">Wrong: <span id="incorrectCount">0</span></p>
+            <p>
+                <span id="correctLabel">Correct:</span> 
+                <span id="correctCount">0</span>
+            </p>
+            <p>
+                <span id="incorrectLabel">Correct:</span> 
+                <span id="incorrectCount">0</span>
+            </p>
         </div>
     </div>
+</div>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="script.js"></script>
     <script>

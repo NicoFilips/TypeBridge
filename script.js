@@ -35,11 +35,11 @@ const qwertzToUkrainian = {
 
 const wordDisplay = document.getElementById("wordDisplay");
 const userInput = document.getElementById("userInput");
-const correctCountEl = document.getElementById("correctCount");
-const incorrectCountEl = document.getElementById("incorrectCount");
+let correctCountEl = document.getElementById("correctCount");
+let incorrectCountEl = document.getElementById("incorrectCount");
 const correctCountLabel = document.getElementById("correctLabel")
 const incorrectCountLabel = document.getElementById("incorrectLabel")
-const feedback = document.getElementById("feedback");
+let feedback = document.getElementById("feedback");
 
 function createReverseMapping(mapping) {
     let reverseMapping = {};
@@ -104,10 +104,7 @@ userInput.addEventListener('input', () => {
     } else {
         wrongInput();
     }
-    correctCountEl.innerText = correctCount;
-    incorrectCountEl.innerText = incorrectCount;
 
-    // Setze das Eingabefeld nach kurzer Verzögerung zurück
     setTimeout(() => {
         userInput.value = '';
         userInput.style.backgroundColor = ""; // Setze Hintergrundfarbe zurück
@@ -117,19 +114,24 @@ userInput.addEventListener('input', () => {
 });
 
 function correctInput(){
-    console.log('correct input!');
     correctCount++;
+    correctCountEl.textContent  = correctCount;
     feedback.innerText = "Correct!";
     feedback.style.color = "green";
     userInput.style.backgroundColor = "lightgreen";
+    console.log('innertext: ' + correctCountEl.innerText);
+    console.log('correct input! count: ' + correctCount);
 }
 
 function wrongInput(){
-    console.log('wrong input!');
     incorrectCount++;
+    incorrectCountEl.textContent   = incorrectCount;
+    incorrectCountEl.color = "black";
     feedback.innerText = "Wrong!";
     feedback.style.color = "red";
     userInput.style.backgroundColor = "lightcoral"; 
+    console.log('innertext: ' + incorrectCountEl.innerText);
+    console.log('wrong input! count: ' + incorrectCount);
 }
 
 
@@ -150,16 +152,16 @@ displayNewLetter();
 document.getElementById('russianLanguage').addEventListener('click', function() {
     currentLanguage = 'Russian';
     header.textContent = 'Практикуйте свои навыки раскладки клавиатуры!';
-    correctCountLabel.textContent = 'правильные:';
-    incorrectCountLabel.textContent = 'неправильные:';
+    correctCountLabel.textContent  = 'правильные:';
+    incorrectCountLabel.textContent  = 'неправильные:';
     unlockAndFocusTextbox();
 });
 
 document.getElementById('ukrainianLanguage').addEventListener('click', function() {
     currentLanguage = 'Ukrainian';
     header.textContent = 'Практикуйте свої навички клавіатури!';
-    correctCountLabel.textContent = 'правильно:';
-    incorrectCountLabel.textContent = 'неправильно:';
+    correctCountLabel.innerText = 'правильно:';
+    incorrectCountLabel.innerText = 'неправильно:';
     unlockAndFocusTextbox();
 });
 
@@ -178,9 +180,109 @@ function updateLayoutButtonLabel() {
 updateLayoutButtonLabel();
 
 function unlockAndFocusTextbox() {
+    console.log('unlockAndFocusTextbox');
     var layoutInput = document.getElementById('toggleLayout');
     layoutInput.disabled = false;
     var textInput = document.getElementById('userInput');
-    textInput.disabled = false; // Textbox entsperren
-    textInput.focus(); // Fokus auf die Textbox setzen
+    textInput.disabled = false; 
+    textInput.focus();
 }
+
+    // Funktion, die aufgerufen wird, wenn ein Button geklickt wird
+    function handleButtonClick(event) {
+        // Alle Buttons holen
+        var buttons = document.querySelectorAll('.game-button');
+
+        // Entferne die 'active' Klasse von allen Buttons
+        buttons.forEach(function(button) {
+            button.classList.remove('active');
+        });
+
+        // Füge die 'active' Klasse zum geklickten Button hinzu
+        event.currentTarget.classList.add('active');
+    }
+
+    // Event-Listener zu den Buttons hinzufügen
+    document.addEventListener('DOMContentLoaded', (event) => {
+        correctCountEl = document.getElementById("correctCount");
+        incorrectCountEl = document.getElementById("incorrectCount");
+        var buttons = document.querySelectorAll('.game-button');
+        buttons.forEach(function(button) {
+            button.addEventListener('click', handleButtonClick);
+        });
+    });
+
+
+    var timerInterval; // Variable für das Timer-Intervall
+    var isTimerRunning = false; // Zustandsvariable, um zu überprüfen, ob der Timer läuft
+    
+    function startTimer(duration, display, button) {
+        if (isTimerRunning) {
+            return; // Verhindert das Neustarten des Timers, wenn er bereits läuft
+        }
+    
+        isTimerRunning = true;
+        var timer = duration, minutes, seconds;
+    
+        timerInterval = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+    
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+    
+            display.textContent = minutes + ":" + seconds;
+    
+            if (--timer < 0) {
+                clearInterval(timerInterval); 
+                isTimerRunning = false; 
+                display.textContent = "01:00";
+            }
+        }, 1000);
+    }
+    
+    function resetTimer(display, button) {
+        if (!isTimerRunning) {
+            incorrectCount = 0;
+            incorrectCountEl = 0;
+            return; // Verhindert das Zurücksetzen des Timers, wenn er nicht läuft
+        }
+    
+        clearInterval(timerInterval); // Stoppt den laufenden Timer
+        isTimerRunning = false;
+        display.textContent = "01:00"; // Setzt den Timer-Text zurück
+        button.disabled = false; // Reaktiviert den Button
+    }
+    
+    function handleButtonClick(event) {
+        event.preventDefault();
+        event.stopPropagation();
+    
+        var button = event.currentTarget;
+        var display = document.querySelector('#timer');
+    
+        // Nur für den "1 minute mode" Button
+        if (button.id === "oneMinuteMode") {
+            // Startet oder resettet den Timer
+            if (isTimerRunning) {
+                console.log("Reset Timer");
+                resetTimer(display, button);
+            } else {
+                console.log("Start Timer");
+                startTimer(60, display, button);
+            }
+        } else {
+            console.log("Freeplay Mode oder anderer Button geklickt");
+            incorrectCount = 0;
+            incorrectCountEl = 0;
+            active
+        }
+    }
+    
+    // Event-Listener zu den Buttons hinzufügen
+    document.addEventListener('DOMContentLoaded', function() {
+        var buttons = document.querySelectorAll('.game-button');
+        buttons.forEach(function(button) {
+            button.addEventListener('click', handleButtonClick);
+        });
+    });
