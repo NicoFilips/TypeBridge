@@ -1,6 +1,7 @@
 let correctCount = 0;
 let incorrectCount = 0;
-const kyrillischeBuchstaben = [
+
+const russianCyrillics = [
     "А", "а", "Б", "б", "В", "в", "Г", "г", "Д", "д",
     "Е", "е", "Ё", "ё", "Ж", "ж", "З", "з", "И", "и",
     "Й", "й", "К", "к", "Л", "л", "М", "м", "Н", "н",
@@ -9,15 +10,14 @@ const kyrillischeBuchstaben = [
     "Ш", "ш", "Щ", "щ", "Ъ", "ъ", "Ы", "ы", "Ь", "ь"
 ];
 
-const qwertzToCyrillic = {
+const qwertzToRussian = {
     'Q': 'Й', 'W': 'Ц', 'E': 'У', 'R': 'К', 'T': 'Е', 'Z': 'Н', 'U': 'Г', 'I': 'Ш', 'O': 'Щ', 'P': 'З',
     'A': 'Ф', 'S': 'Ы', 'D': 'В', 'F': 'А', 'G': 'П', 'H': 'Р', 'J': 'О', 'K': 'Л', 'L': 'Д', 
     'Y': 'Я', 'X': 'Ч', 'C': 'С', 'V': 'М', 'B': 'И', 'N': 'Т', 'M': 'Ь', 
     'Ä': 'Э', 'Ö': 'Ж', 'Ü': 'Ю',
-    '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '0': '0'
 };
 
-const ukrainischeBuchstaben = [
+const ukrainianCyrillics = [
     "А", "а", "Б", "б", "В", "в", "Г", "г", "Ґ", "ґ",
     "Д", "д", "Е", "е", "Є", "є", "Ж", "ж", "З", "з",
     "И", "и", "І", "і", "Ї", "ї", "Й", "й", "К", "к",
@@ -31,36 +31,47 @@ const qwertzToUkrainian = {
     'Q': 'Й', 'W': 'Ц', 'E': 'У', 'R': 'К', 'T': 'Е', 'Z': 'Н', 'U': 'Г', 'I': 'Ш', 'O': 'Щ', 'P': 'З', 'Ü': 'Ж',
     'A': 'Ф', 'S': 'І', 'D': 'В', 'F': 'А', 'G': 'П', 'H': 'Р', 'J': 'О', 'K': 'Л', 'L': 'Д', 'Ö': 'Ж', 'Ä': 'Є',
     'Y': 'Я', 'X': 'Ч', 'C': 'С', 'V': 'М', 'B': 'И', 'N': 'Т', 'M': 'Ь',
-    '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '0': '0'
-    // Füge weitere Tasten bei Bedarf hinzu
 };
 
 const wordDisplay = document.getElementById("wordDisplay");
 const userInput = document.getElementById("userInput");
 const correctCountEl = document.getElementById("correctCount");
 const incorrectCountEl = document.getElementById("incorrectCount");
-let correctCountLabel = document.getElementById("correctLabel")
-let incorrectCountLabel = document.getElementById("incorrectLabel")
+const correctCountLabel = document.getElementById("correctLabel")
+const incorrectCountLabel = document.getElementById("incorrectLabel")
 const feedback = document.getElementById("feedback");
 
 function createReverseMapping(mapping) {
     let reverseMapping = {};
     for (let key in mapping) {
-        let value = mapping[key];
+        let value = mapping[key.toUpperCase];
         reverseMapping[value] = key;
     }
     return reverseMapping;
 }
 
-const cyrillicToQwertz = createReverseMapping(qwertzToCyrillic);
+const cyrillicToRussian = createReverseMapping(qwertzToRussian);
+const cyrillicToUkrainian = createReverseMapping(qwertzToUkrainian)
+
+let isLayoutSwapped = false;
 
 function getRandomLetter() {
+    let letter;
+
     if (currentLanguage === 'Russian') {
-        let letter = kyrillischeBuchstaben[Math.floor(Math.random() * kyrillischeBuchstaben.length)];
-        return cyrillicToQwertz[letter] || letter; // Fallback auf den ursprünglichen Buchstaben, falls keine Zuordnung vorhanden ist
+        letter = russianCyrillics[Math.floor(Math.random() * russianCyrillics.length)];
+        if (isLayoutSwapped) {
+            return cyrillicToRussian[letter] || letter; // Wende das Mapping an, falls vorhanden
+        } else {
+            return letter; // Gebe den ursprünglichen Buchstaben zurück, wenn das Layout nicht umgekehrt ist
+        }
     } else if (currentLanguage === 'Ukrainian') {
-        let letter = ukrainischeBuchstaben[Math.floor(Math.random() * ukrainischeBuchstaben.length)];
-        return cyrillicToQwertz[letter] || letter; // Hier müssten Sie das gleiche für das ukrainische Layout tun
+        letter = ukrainianCyrillics[Math.floor(Math.random() * ukrainianCyrillics.length)];
+        if (isLayoutSwapped) {
+            return cyrillicToUkrainian[letter] || letter; // Wende das Mapping an, falls vorhanden
+        } else {
+            return letter; // Gebe den ursprünglichen Buchstaben zurück, wenn das Layout nicht umgekehrt ist
+        }
     }
 }
 
@@ -72,10 +83,12 @@ let currentLanguage = 'Russian';
 let header = document.getElementById('headerTitle');
 
 userInput.addEventListener('input', () => {
+    userInput.disabled = true;
+    
     let lastChar = userInput.value.slice(-1).toUpperCase();
     let cyrillicChar;
     if (currentLanguage === 'Russian') {
-        cyrillicChar = qwertzToCyrillic[lastChar];
+        cyrillicChar = qwertzToRussian[lastChar];
     } else if (currentLanguage === 'Ukrainian') {
         cyrillicChar = qwertzToUkrainian[lastChar];
     }
@@ -85,16 +98,11 @@ userInput.addEventListener('input', () => {
         userInput.value = userInput.value.slice(0, -1) + cyrillicChar;
     }
 
+    console.log(userInput.value.toUpperCase() +" "+ wordDisplay.innerText.toUpperCase())
     if (userInput.value.toUpperCase() === wordDisplay.innerText.toUpperCase()) {
-        correctCount++;
-        feedback.innerText = "Richtig!";
-        feedback.style.color = "green";
-        userInput.style.backgroundColor = "lightgreen"; // Grün bei richtiger Eingabe
+        correctInput();
     } else {
-        incorrectCount++;
-        feedback.innerText = "Falsch!";
-        feedback.style.color = "red";
-        userInput.style.backgroundColor = "lightcoral"; // Rot bei falscher Eingabe
+        wrongInput();
     }
     correctCountEl.innerText = correctCount;
     incorrectCountEl.innerText = incorrectCount;
@@ -103,16 +111,35 @@ userInput.addEventListener('input', () => {
     setTimeout(() => {
         userInput.value = '';
         userInput.style.backgroundColor = ""; // Setze Hintergrundfarbe zurück
-    }, 500); // Verzögerung von 500 Millisekunden    
+    }, 300); // Verzögerung von 500 Millisekunden    
     displayNewLetter();
+    unlockAndFocusTextbox();
 });
+
+function correctInput(){
+    console.log('correct input!');
+    correctCount++;
+    feedback.innerText = "Correct!";
+    feedback.style.color = "green";
+    userInput.style.backgroundColor = "lightgreen";
+}
+
+function wrongInput(){
+    console.log('wrong input!');
+    incorrectCount++;
+    feedback.innerText = "Wrong!";
+    feedback.style.color = "red";
+    userInput.style.backgroundColor = "lightcoral"; 
+}
 
 
 document.getElementById('russianLanguage').addEventListener('click', function() {
-    document.body.className = 'russian-background'; // Setzt die Klasse auf russische Farben
+    console.log('user choosed russian layout');
+    document.body.className = 'russian-background'; 
 });
 
 document.getElementById('ukrainianLanguage').addEventListener('click', function() {
+    console.log('user choosed ukrainian layout')
     document.body.className = 'ukrainian-background'; // Setzt die Klasse auf ukrainische Farben
 });
 
@@ -137,16 +164,15 @@ document.getElementById('ukrainianLanguage').addEventListener('click', function(
 });
 
 
-let isLayoutSwapped = false;
-
 document.getElementById('toggleLayout').addEventListener('click', function() {
+    console.log('Layoutswapp is now: ' + !isLayoutSwapped);
     isLayoutSwapped = !isLayoutSwapped; // Wechselt den Status bei jedem Klick
     updateLayoutButtonLabel();
     displayNewLetter();
 });
 
 function updateLayoutButtonLabel() {
-    document.getElementById('toggleLayout').textContent = isLayoutSwapped ? 'German Layout' : currentLanguage + " Layout";
+    document.getElementById('toggleLayout').textContent = isLayoutSwapped ? 'Latin Layout' : currentLanguage + " Layout";
 }
 
 updateLayoutButtonLabel();
