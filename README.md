@@ -10,14 +10,15 @@
 
 ## About the App 📖
 
-This app is designed to help native speakers of Ukrainian 🇺🇦 and Russian 🇷🇺 as well as German speakers 🇩🇪 learn each other's keyboard layouts. It's particularly useful for those who have recently arrived in Germany and wish to familiarize themselves with the Latin keyboard layout, or for Germans looking to learn the Cyrillic layout.
+This app is designed to help native speakers of Ukrainian 🇺🇦, belarusian🇧🇾 and Russian 🇷🇺 as well as German speakers 🇩🇪 learn each other's keyboard layouts. It's particularly useful for those who have recently arrived in Germany and wish to familiarize themselves with the Latin keyboard layout, or for Germans looking to learn the Cyrillic layout.
 
 ## Features 🚀
 
-- **Language Selection** 🌍: Choose between Russian, Ukrainian, and German to practice the corresponding keyboard layout.
+- **Language Selection** 🌍: Choose between Russian, Ukrainian, and Belarusian layout to practice the corresponding keyboard layout.
 - **Interactive Training** 💡: Receive immediate visual feedback for each keyboard input, whether correct or incorrect.
 - **Progress Tracking** 📈: Keep an eye on your statistics for right and wrong answers.
 - **Responsive Design** 📱: Learn on any device, whether it's a desktop, tablet, or smartphone.
+- **Reverse Layout** 🧑‍🎓: You can reverse the layout so you can learn one of the cyrillic layouts as well!
 
 ## Getting Started 🏁
 
