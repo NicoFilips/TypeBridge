@@ -167,6 +167,7 @@ document.getElementById('russianLanguage').addEventListener('click', function() 
     console.log('user choosed russian layout');
     document.body.className = 'russian-background'; 
     displayNewLetter();
+    document.getElementById('myImage').src = 'src/KB_Russian.png';
     currentLanguage = 'Russian';
     header.textContent = 'Практикуйте свои навыки раскладки клавиатуры!';
     correctCountLabel.textContent  = 'правильные:';
@@ -177,6 +178,7 @@ document.getElementById('russianLanguage').addEventListener('click', function() 
 
 document.getElementById('ukrainianLanguage').addEventListener('click', function() {
     console.log('user choosed ukrainian layout')
+    document.getElementById('myImage').src = 'src/KB_Ukrainian.png';
     document.body.className = 'ukrainian-background'; 
     displayNewLetter();
     currentLanguage = 'Ukrainian';
@@ -189,6 +191,7 @@ document.getElementById('ukrainianLanguage').addEventListener('click', function(
 document.getElementById('belarusianLanguage').addEventListener('click', function() {
     console.log('user choosed belarusian layout')
     document.body.className = 'belarusian-background'; 
+    document.getElementById('myImage').src = 'src/KB_Belarusian.png';
     displayNewLetter();
     currentLanguage = 'Belarusian';
     header.textContent = 'Практыкуйце свае навыкі клавіятуры!';
@@ -334,7 +337,7 @@ function unlockAndFocusTextbox() {
 
         info1.innerText = "молодец!";
         info2.innerText = "Your Time has run up and your Score is:";
-        info3.innerText = "Correct: "+ correctCount + " and Wrong: " + incorrectCount + " with " + incorrectCount + correctCount +" Trys!";
+        info3.innerText = "Correct: " + correctCount + " and Wrong: " + incorrectCount + " with " + (incorrectCount + correctCount) + " Trys!";
         modal.style.display = "block";
     
         span.onclick = function() {
@@ -347,3 +350,15 @@ function unlockAndFocusTextbox() {
             }
         }
     }
+
+    document.getElementById('toggleImageContainer').addEventListener('click', function() {
+        var container = document.getElementById('imageContainer');
+        console.log(container);
+        if (container.classList.contains('hidden')) {
+            container.classList.remove('hidden');
+            container.classList.add('visible');
+        } else {
+            container.classList.remove('visible');
+            container.classList.add('hidden');
+        }
+    });

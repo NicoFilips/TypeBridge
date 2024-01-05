@@ -183,8 +183,8 @@ body {
 
 .belarusian-background {
     background: linear-gradient(to bottom, 
-                #d22730 0%, /* Rot */
-                #4aa657 100%), /* Grün */
+                #d22730 60%, /* Rot */
+                #4aa657 60%), /* Grün */
                 linear-gradient(to right, 
                 white 0%, 
                 transparent 10%); /* Weißer Streifen links mit sanftem Übergang */
@@ -325,4 +325,12 @@ body {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block; /* oder display: flex; oder ein anderes display property, je nach Bedarf */
 }
