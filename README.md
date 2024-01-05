@@ -10,7 +10,7 @@
 
 ## About the App 📖
 
-This app is designed to help native speakers of Ukrainian 🇺🇦 and Russian 🇷🇺 as well as German speakers 🇩🇪 learn each other's keyboard layouts. It's particularly useful for those who have recently arrived in Germany and wish to familiarize themselves with the Latin keyboard layout, or for Germans looking to learn the Cyrillic layout.
+This app is designed to help native speakers of Ukrainian 🇺🇦, belarusian🇧🇾 and Russian 🇷🇺 as well as German speakers 🇩🇪 learn each other's keyboard layouts. It's particularly useful for those who have recently arrived in Germany and wish to familiarize themselves with the Latin keyboard layout, or for Germans looking to learn the Cyrillic layout.
 
 ## Features 🚀
 
