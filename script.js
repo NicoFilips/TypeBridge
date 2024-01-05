@@ -33,6 +33,22 @@ const qwertzToUkrainian = {
     'Y': 'Я', 'X': 'Ч', 'C': 'С', 'V': 'М', 'B': 'И', 'N': 'Т', 'M': 'Ь',
 };
 
+const belarusianCyrillics = [
+    "А", "а", "Б", "б", "В", "в", "Г", "г", "Д", "д",
+    "Е", "е", "Ё", "ё", "Ж", "ж", "З", "з", "І", "і",
+    "Й", "й", "К", "к", "Л", "л", "М", "м", "Н", "н",
+    "О", "о", "П", "п", "Р", "р", "С", "с", "Т", "т",
+    "У", "у", "Ў", "ў", "Ф", "ф", "Х", "х", "Ц", "ц",
+    "Ч", "ч", "Ш", "ш", "Ы", "ы", "Ь", "ь", "Э", "э",
+    "Ю", "ю", "Я", "я"
+];
+
+const qwertzToBelarusian = {
+    'Q': 'Й', 'W': 'Ц', 'E': 'У', 'R': 'К', 'T': 'Е', 'Z': 'Н', 'U': 'Г', 'I': 'Ш', 'O': 'Щ', 'P': 'З', 'Ü': 'Х',
+    'A': 'Ф', 'S': 'Ы', 'D': 'В', 'F': 'А', 'G': 'П', 'H': 'Р', 'J': 'О', 'K': 'Л', 'L': 'Д', 'Ö': 'Ж', 'Ä': 'Э',
+    'Y': 'Я', 'X': 'Ч', 'C': 'С', 'V': 'М', 'B': 'І', 'N': 'Т', 'M': 'Ь',
+};
+
 const wordDisplay = document.getElementById("wordDisplay");
 const userInput = document.getElementById("userInput");
 let correctCountEl = document.getElementById("correctCount");
@@ -44,6 +60,7 @@ let feedback = document.getElementById("feedback");
 function createReverseMapping(mapping) {
     let reverseMapping = {};
     for (let key in mapping) {
+        console.log('key to reverese: ' + key);
         let value = mapping[key.toUpperCase];
         reverseMapping[value] = key;
     }
@@ -72,6 +89,13 @@ function getRandomLetter() {
         } else {
             return letter; // Gebe den ursprünglichen Buchstaben zurück, wenn das Layout nicht umgekehrt ist
         }
+    } else if (currentLanguage === 'Belarussian'){
+        letter = ukrainianCyrillics[Math.floor(Math.random() * ukrainianCyrillics.length)];
+        if (isLayoutSwapped) {
+            return cyrillicToUkrainian[letter] || letter; // Wende das Mapping an, falls vorhanden
+        } else {
+            return letter; // Gebe den ursprünglichen Buchstaben zurück, wenn das Layout nicht umgekehrt ist
+        }
     }
 }
 
@@ -91,6 +115,8 @@ userInput.addEventListener('input', () => {
         cyrillicChar = qwertzToRussian[lastChar];
     } else if (currentLanguage === 'Ukrainian') {
         cyrillicChar = qwertzToUkrainian[lastChar];
+    } else if (currentLanguage === 'Belarusian'){
+        cyrillicChar = qwertzToBelarusian[lastChar];
     }
 
     if (cyrillicChar) {
@@ -134,34 +160,41 @@ function wrongInput(){
     console.log('wrong input! count: ' + incorrectCount);
 }
 
-
-document.getElementById('russianLanguage').addEventListener('click', function() {
-    console.log('user choosed russian layout');
-    document.body.className = 'russian-background'; 
-});
-
-document.getElementById('ukrainianLanguage').addEventListener('click', function() {
-    console.log('user choosed ukrainian layout')
-    document.body.className = 'ukrainian-background'; // Setzt die Klasse auf ukrainische Farben
-});
-
-
 displayNewLetter();
 
 
 document.getElementById('russianLanguage').addEventListener('click', function() {
+    console.log('user choosed russian layout');
+    document.body.className = 'russian-background'; 
+    displayNewLetter();
     currentLanguage = 'Russian';
     header.textContent = 'Практикуйте свои навыки раскладки клавиатуры!';
     correctCountLabel.textContent  = 'правильные:';
     incorrectCountLabel.textContent  = 'неправильные:';
+    document.getElementById('toggleLayout').click();
     unlockAndFocusTextbox();
 });
 
 document.getElementById('ukrainianLanguage').addEventListener('click', function() {
+    console.log('user choosed ukrainian layout')
+    document.body.className = 'ukrainian-background'; 
+    displayNewLetter();
     currentLanguage = 'Ukrainian';
     header.textContent = 'Практикуйте свої навички клавіатури!';
     correctCountLabel.innerText = 'правильно:';
     incorrectCountLabel.innerText = 'неправильно:';
+    document.getElementById('toggleLayout').click();
+    unlockAndFocusTextbox();
+});
+document.getElementById('belarusianLanguage').addEventListener('click', function() {
+    console.log('user choosed belarusian layout')
+    document.body.className = 'belarusian-background'; 
+    displayNewLetter();
+    currentLanguage = 'Belarusian';
+    header.textContent = 'Практыкуйце свае навыкі клавіятуры!';
+    correctCountLabel.innerText = 'правільны:';
+    incorrectCountLabel.innerText = 'няправільны:';
+    document.getElementById('toggleLayout').click();
     unlockAndFocusTextbox();
 });
 
@@ -237,7 +270,6 @@ function unlockAndFocusTextbox() {
                 clearInterval(timerInterval); 
                 isTimerRunning = false; 
                 display.textContent = "01:00";
-                alert("Die Zeit ist abgelaufen!");
                 showModal();
             }
         }, 1000);
@@ -274,7 +306,7 @@ function unlockAndFocusTextbox() {
                 startTimer(60, display, button);
             }
         } else {
-            console.log("Freeplay Mode oder anderer Button geklickt");
+            console.log("Freeplay Mode or other mode choosen");
             incorrectCount = 0;
             incorrectCountEl = 0;
             active
@@ -295,7 +327,14 @@ function unlockAndFocusTextbox() {
     function showModal() {
         var modal = document.getElementById("myModal");
         var span = document.getElementsByClassName("close")[0];
-    
+        
+        let info1 = document.getElementById("ModalInfo1");
+        let info2 = document.getElementById("ModalInfo2");
+        let info3 = document.getElementById("ModalInfo3");
+
+        info1.innerText = "молодец!";
+        info2.innerText = "Your Time has run up and your Score is:";
+        info3.innerText = "Correct: "+ correctCount + " and Wrong: " + incorrectCount + " with " + incorrectCount + correctCount +" Trys!";
         modal.style.display = "block";
     
         span.onclick = function() {

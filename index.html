@@ -18,6 +18,9 @@
             <button id="ukrainianLanguage" class="language-button" title="Use Ukrainian keyboard layout">
                 <img src="./src/Flag_of_Ukraine.png" alt="Ukrainian">
             </button>
+            <button id="belarusianLanguage" class="language-button" title="Use Belarssian keyboard layout">
+                <img src="./src/Flag_of_Belarus.png" alt="Belarusian">
+            </button>
         </div>
         <div>
             <button id="toggleLayout" title="Select the keyboard Layout which you are currently typing on" disabled >Choose your layout</button>
@@ -52,19 +55,15 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Zeit abgelaufen!</h2>
-            <p>Die Zeit für diese Runde ist vorbei.</p>
+            <h2>Times up!</h2>
+            <p id="ModalInfo1"></p>
+            <p id="ModalInfo2"></p>
+            <p id="ModalInfo3"></p>
         </div>
     </div>
     
 </div>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="script.js"></script>
-    <script>
-        particlesJS.load('particles-js', 'particles.json', function() {
-            console.log('callback - particles.js config loaded');
-        });
-    </script>
 </body>
 </html>
 
