@@ -14,10 +14,11 @@ This app is designed to help native speakers of Ukrainian 🇺🇦, belarusian�
 
 ## Features 🚀
 
-- **Language Selection** 🌍: Choose between Russian, Ukrainian, and German to practice the corresponding keyboard layout.
+- **Language Selection** 🌍: Choose between Russian, Ukrainian, and Belarusian layout to practice the corresponding keyboard layout.
 - **Interactive Training** 💡: Receive immediate visual feedback for each keyboard input, whether correct or incorrect.
 - **Progress Tracking** 📈: Keep an eye on your statistics for right and wrong answers.
 - **Responsive Design** 📱: Learn on any device, whether it's a desktop, tablet, or smartphone.
+- **Reverse Layout** 🧑‍🎓: You can reverse the layout so you can learn one of the cyrillic layouts as well!
 
 ## Getting Started 🏁
 
