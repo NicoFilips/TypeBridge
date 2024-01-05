@@ -237,6 +237,8 @@ function unlockAndFocusTextbox() {
                 clearInterval(timerInterval); 
                 isTimerRunning = false; 
                 display.textContent = "01:00";
+                alert("Die Zeit ist abgelaufen!");
+                showModal();
             }
         }, 1000);
     }
@@ -286,3 +288,23 @@ function unlockAndFocusTextbox() {
             button.addEventListener('click', handleButtonClick);
         });
     });
+
+
+
+
+    function showModal() {
+        var modal = document.getElementById("myModal");
+        var span = document.getElementsByClassName("close")[0];
+    
+        modal.style.display = "block";
+    
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
