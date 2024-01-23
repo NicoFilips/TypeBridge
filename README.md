@@ -7,6 +7,7 @@
   <p>Source: DALL-E 3</p>
 </blockquote>
 
+[![pages-build-deployment](https://github.com/NicoFilips/TypeBridge/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/NicoFilips/TypeBridge/actions/workflows/pages/pages-build-deployment)
 
 ## About the App 📖
 
