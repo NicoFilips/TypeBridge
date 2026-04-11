@@ -3,11 +3,17 @@ type PracticeDirection = "latin-to-cyrillic" | "cyrillic-to-latin";
 type PracticeMode = "freeplay" | "timed";
 type FeedbackType = "neutral" | "correct" | "wrong";
 
+type KeyEntry = {
+  code: string;
+  label: string;
+  cyrillic: string;
+};
+
 type LanguageConfig = {
   name: string;
   layoutName: string;
   image: string;
-  map: Record<string, string>;
+  keys: KeyEntry[];
 };
 
 type AppState = {
@@ -16,6 +22,9 @@ type AppState = {
   mode: PracticeMode;
   target: string;
   expected: string;
+  expectedCode: string;
+  expectedLabel: string;
+  expectedCyrillic: string;
   correct: number;
   wrong: number;
   streak: number;
@@ -29,34 +38,120 @@ const languages: Record<LanguageKey, LanguageConfig> = {
     name: "Russian",
     layoutName: "Russian layout",
     image: "src/KB_Russian.png",
-    map: {
-      Q: "Й", W: "Ц", E: "У", R: "К", T: "Е", Z: "Н", U: "Г", I: "Ш", O: "Щ", P: "З",
-      A: "Ф", S: "Ы", D: "В", F: "А", G: "П", H: "Р", J: "О", K: "Л", L: "Д",
-      Y: "Я", X: "Ч", C: "С", V: "М", B: "И", N: "Т", M: "Ь",
-      "Ä": "Э", "Ö": "Ж", "Ü": "Ю"
-    }
+    keys: [
+      { code: "Backquote", label: "^", cyrillic: "Ё" },
+      { code: "KeyQ", label: "Q", cyrillic: "Й" },
+      { code: "KeyW", label: "W", cyrillic: "Ц" },
+      { code: "KeyE", label: "E", cyrillic: "У" },
+      { code: "KeyR", label: "R", cyrillic: "К" },
+      { code: "KeyT", label: "T", cyrillic: "Е" },
+      { code: "KeyY", label: "Z", cyrillic: "Н" },
+      { code: "KeyU", label: "U", cyrillic: "Г" },
+      { code: "KeyI", label: "I", cyrillic: "Ш" },
+      { code: "KeyO", label: "O", cyrillic: "Щ" },
+      { code: "KeyP", label: "P", cyrillic: "З" },
+      { code: "BracketLeft", label: "Ü", cyrillic: "Х" },
+      { code: "BracketRight", label: "+", cyrillic: "Ъ" },
+      { code: "KeyA", label: "A", cyrillic: "Ф" },
+      { code: "KeyS", label: "S", cyrillic: "Ы" },
+      { code: "KeyD", label: "D", cyrillic: "В" },
+      { code: "KeyF", label: "F", cyrillic: "А" },
+      { code: "KeyG", label: "G", cyrillic: "П" },
+      { code: "KeyH", label: "H", cyrillic: "Р" },
+      { code: "KeyJ", label: "J", cyrillic: "О" },
+      { code: "KeyK", label: "K", cyrillic: "Л" },
+      { code: "KeyL", label: "L", cyrillic: "Д" },
+      { code: "Semicolon", label: "Ö", cyrillic: "Ж" },
+      { code: "Quote", label: "Ä", cyrillic: "Э" },
+      { code: "KeyZ", label: "Y", cyrillic: "Я" },
+      { code: "KeyX", label: "X", cyrillic: "Ч" },
+      { code: "KeyC", label: "C", cyrillic: "С" },
+      { code: "KeyV", label: "V", cyrillic: "М" },
+      { code: "KeyB", label: "B", cyrillic: "И" },
+      { code: "KeyN", label: "N", cyrillic: "Т" },
+      { code: "KeyM", label: "M", cyrillic: "Ь" },
+      { code: "Comma", label: ",", cyrillic: "Б" },
+      { code: "Period", label: ".", cyrillic: "Ю" }
+    ]
   },
   ukrainian: {
     name: "Ukrainian",
     layoutName: "Ukrainian layout",
     image: "src/KB_Ukrainian.PNG",
-    map: {
-      Q: "Й", W: "Ц", E: "У", R: "К", T: "Е", Z: "Н", U: "Г", I: "Ш", O: "Щ", P: "З",
-      A: "Ф", S: "І", D: "В", F: "А", G: "П", H: "Р", J: "О", K: "Л", L: "Д",
-      Y: "Я", X: "Ч", C: "С", V: "М", B: "И", N: "Т", M: "Ь",
-      "Ä": "Є", "Ö": "Ж", "Ü": "Х"
-    }
+    keys: [
+      { code: "Backquote", label: "^", cyrillic: "Ґ" },
+      { code: "KeyQ", label: "Q", cyrillic: "Й" },
+      { code: "KeyW", label: "W", cyrillic: "Ц" },
+      { code: "KeyE", label: "E", cyrillic: "У" },
+      { code: "KeyR", label: "R", cyrillic: "К" },
+      { code: "KeyT", label: "T", cyrillic: "Е" },
+      { code: "KeyY", label: "Z", cyrillic: "Н" },
+      { code: "KeyU", label: "U", cyrillic: "Г" },
+      { code: "KeyI", label: "I", cyrillic: "Ш" },
+      { code: "KeyO", label: "O", cyrillic: "Щ" },
+      { code: "KeyP", label: "P", cyrillic: "З" },
+      { code: "BracketLeft", label: "Ü", cyrillic: "Х" },
+      { code: "BracketRight", label: "+", cyrillic: "Ї" },
+      { code: "KeyA", label: "A", cyrillic: "Ф" },
+      { code: "KeyS", label: "S", cyrillic: "І" },
+      { code: "KeyD", label: "D", cyrillic: "В" },
+      { code: "KeyF", label: "F", cyrillic: "А" },
+      { code: "KeyG", label: "G", cyrillic: "П" },
+      { code: "KeyH", label: "H", cyrillic: "Р" },
+      { code: "KeyJ", label: "J", cyrillic: "О" },
+      { code: "KeyK", label: "K", cyrillic: "Л" },
+      { code: "KeyL", label: "L", cyrillic: "Д" },
+      { code: "Semicolon", label: "Ö", cyrillic: "Ж" },
+      { code: "Quote", label: "Ä", cyrillic: "Є" },
+      { code: "KeyZ", label: "Y", cyrillic: "Я" },
+      { code: "KeyX", label: "X", cyrillic: "Ч" },
+      { code: "KeyC", label: "C", cyrillic: "С" },
+      { code: "KeyV", label: "V", cyrillic: "М" },
+      { code: "KeyB", label: "B", cyrillic: "И" },
+      { code: "KeyN", label: "N", cyrillic: "Т" },
+      { code: "KeyM", label: "M", cyrillic: "Ь" },
+      { code: "Comma", label: ",", cyrillic: "Б" },
+      { code: "Period", label: ".", cyrillic: "Ю" }
+    ]
   },
   belarusian: {
     name: "Belarusian",
     layoutName: "Belarusian layout",
     image: "src/KB_Belarusian.png",
-    map: {
-      Q: "Й", W: "Ц", E: "У", R: "К", T: "Е", Z: "Н", U: "Г", I: "Ш", O: "Ў", P: "З",
-      A: "Ф", S: "Ы", D: "В", F: "А", G: "П", H: "Р", J: "О", K: "Л", L: "Д",
-      Y: "Я", X: "Ч", C: "С", V: "М", B: "І", N: "Т", M: "Ь",
-      "Ä": "Э", "Ö": "Ж", "Ü": "Х"
-    }
+    keys: [
+      { code: "Backquote", label: "^", cyrillic: "Ё" },
+      { code: "KeyQ", label: "Q", cyrillic: "Й" },
+      { code: "KeyW", label: "W", cyrillic: "Ц" },
+      { code: "KeyE", label: "E", cyrillic: "У" },
+      { code: "KeyR", label: "R", cyrillic: "К" },
+      { code: "KeyT", label: "T", cyrillic: "Е" },
+      { code: "KeyY", label: "Z", cyrillic: "Н" },
+      { code: "KeyU", label: "U", cyrillic: "Г" },
+      { code: "KeyI", label: "I", cyrillic: "Ш" },
+      { code: "KeyO", label: "O", cyrillic: "Ў" },
+      { code: "KeyP", label: "P", cyrillic: "З" },
+      { code: "BracketLeft", label: "Ü", cyrillic: "Х" },
+      { code: "KeyA", label: "A", cyrillic: "Ф" },
+      { code: "KeyS", label: "S", cyrillic: "Ы" },
+      { code: "KeyD", label: "D", cyrillic: "В" },
+      { code: "KeyF", label: "F", cyrillic: "А" },
+      { code: "KeyG", label: "G", cyrillic: "П" },
+      { code: "KeyH", label: "H", cyrillic: "Р" },
+      { code: "KeyJ", label: "J", cyrillic: "О" },
+      { code: "KeyK", label: "K", cyrillic: "Л" },
+      { code: "KeyL", label: "L", cyrillic: "Д" },
+      { code: "Semicolon", label: "Ö", cyrillic: "Ж" },
+      { code: "Quote", label: "Ä", cyrillic: "Э" },
+      { code: "KeyZ", label: "Y", cyrillic: "Я" },
+      { code: "KeyX", label: "X", cyrillic: "Ч" },
+      { code: "KeyC", label: "C", cyrillic: "С" },
+      { code: "KeyV", label: "V", cyrillic: "М" },
+      { code: "KeyB", label: "B", cyrillic: "І" },
+      { code: "KeyN", label: "N", cyrillic: "Т" },
+      { code: "KeyM", label: "M", cyrillic: "Ь" },
+      { code: "Comma", label: ",", cyrillic: "Б" },
+      { code: "Period", label: ".", cyrillic: "Ю" }
+    ]
   }
 };
 
@@ -66,6 +161,9 @@ const state: AppState = {
   mode: "freeplay",
   target: "",
   expected: "",
+  expectedCode: "",
+  expectedLabel: "",
+  expectedCyrillic: "",
   correct: 0,
   wrong: 0,
   streak: 0,
@@ -107,16 +205,12 @@ const resultCorrect = queryElement<HTMLSpanElement>("#resultCorrect");
 const resultWrong = queryElement<HTMLSpanElement>("#resultWrong");
 const resultAccuracy = queryElement<HTMLSpanElement>("#resultAccuracy");
 
-function reverseMap(map: Record<string, string>): Record<string, string> {
-  return Object.fromEntries(Object.entries(map).map(([latin, cyrillic]) => [cyrillic, latin]));
-}
-
-function mappedCharacters(map: Record<string, string>): string[] {
-  return [...new Set(Object.values(map))];
-}
-
 function currentLanguage(): LanguageConfig {
   return languages[state.language];
+}
+
+function currentKeys(): KeyEntry[] {
+  return currentLanguage().keys;
 }
 
 function formatTime(seconds: number): string {
@@ -126,47 +220,41 @@ function formatTime(seconds: number): string {
 }
 
 function pickPrompt(): void {
-  const language = currentLanguage();
-  const reverse = reverseMap(language.map);
-  const characters = mappedCharacters(language.map);
-  const cyrillic = characters[Math.floor(Math.random() * characters.length)];
+  const keys = currentKeys();
+  const entry = keys[Math.floor(Math.random() * keys.length)];
 
   if (state.direction === "latin-to-cyrillic") {
-    state.target = cyrillic;
-    state.expected = cyrillic;
-    instructionText.textContent = "Type the matching Cyrillic key.";
+    state.target = entry.cyrillic;
+    state.expected = entry.cyrillic;
+    instructionText.textContent = "Press the German QWERTZ key that produces this Cyrillic letter.";
   } else {
-    state.target = cyrillic;
-    state.expected = reverse[cyrillic] ?? "";
-    instructionText.textContent = "Type the Latin key for this Cyrillic letter.";
+    state.target = entry.cyrillic;
+    state.expected = entry.label;
+    instructionText.textContent = "Name the German QWERTZ key for this Cyrillic letter.";
   }
 
-  if (!state.expected) {
-    pickPrompt();
-    return;
-  }
+  state.expectedCode = entry.code;
+  state.expectedLabel = entry.label;
+  state.expectedCyrillic = entry.cyrillic;
 
   targetCharacter.textContent = state.target;
   solutionPanel.hidden = true;
 }
 
-function normalizeAnswer(value: string): string {
-  const character = value.trim().slice(-1).toUpperCase();
-  if (!character) return "";
-
-  if (state.direction === "latin-to-cyrillic") {
-    return currentLanguage().map[character] ?? character;
-  }
-
-  return character;
+function keyByCode(code: string): KeyEntry | undefined {
+  return currentKeys().find((entry) => entry.code === code);
 }
 
-function formatTypedAnswer(rawAnswer: string, normalizedAnswer: string): string {
-  if (!rawAnswer) return "-";
-  if (rawAnswer !== normalizedAnswer) {
-    return `${rawAnswer} -> ${normalizedAnswer}`;
-  }
-  return rawAnswer;
+function keyByLabel(label: string): KeyEntry | undefined {
+  return currentKeys().find((entry) => entry.label === label.toUpperCase());
+}
+
+function solutionText(entry = {
+  code: state.expectedCode,
+  label: state.expectedLabel,
+  cyrillic: state.expectedCyrillic
+}): string {
+  return `${entry.label} -> ${entry.cyrillic}`;
 }
 
 function updateStats(): void {
@@ -195,30 +283,29 @@ function showSolution(answer: string, expected: string): void {
   solutionPanel.hidden = false;
 }
 
-function handleAnswer(): void {
+function scoreAttempt(entry: KeyEntry | undefined, fallbackLabel: string): void {
   if (state.locked) return;
-
-  const rawAnswer = answerInput.value.trim().slice(-1).toUpperCase();
-  const answer = normalizeAnswer(answerInput.value);
-  if (!answer) return;
+  if (!entry && !fallbackLabel) return;
 
   state.locked = true;
-  const expected = state.expected.toUpperCase();
+  const isCorrect = entry?.code === state.expectedCode;
+  const answerLabel = entry ? solutionText(entry) : fallbackLabel;
+  const expectedLabel = solutionText();
 
-  if (answer === expected) {
+  if (isCorrect) {
     state.correct += 1;
     state.streak += 1;
-    setFeedback("correct", `Correct: ${state.target} = ${state.expected}`);
+    setFeedback("correct", `Correct: ${expectedLabel}`);
   } else {
     state.wrong += 1;
     state.streak = 0;
-    setFeedback("wrong", `Wrong. The solution was ${state.expected}.`);
-    showSolution(formatTypedAnswer(rawAnswer, answer), state.expected);
+    setFeedback("wrong", `Wrong. The solution was ${expectedLabel}.`);
+    showSolution(answerLabel, expectedLabel);
   }
 
   updateStats();
 
-  const nextPromptDelay = answer === expected ? 280 : 1100;
+  const nextPromptDelay = isCorrect ? 280 : 1300;
 
   window.setTimeout(() => {
     answerInput.value = "";
@@ -228,6 +315,25 @@ function handleAnswer(): void {
     state.locked = false;
     answerInput.focus();
   }, nextPromptDelay);
+}
+
+function handleKeydown(event: KeyboardEvent): void {
+  if (event.ctrlKey || event.metaKey || event.altKey || event.isComposing) return;
+
+  const entry = keyByCode(event.code);
+  if (!entry && event.key.length !== 1) return;
+
+  event.preventDefault();
+  answerInput.value = entry?.label ?? event.key.toUpperCase();
+  scoreAttempt(entry, event.key.toUpperCase());
+}
+
+function handleTextInput(): void {
+  if (state.locked) return;
+
+  const rawAnswer = answerInput.value.trim().slice(-1).toUpperCase();
+  const entry = keyByLabel(rawAnswer);
+  scoreAttempt(entry, rawAnswer);
 }
 
 function resetSession(): void {
@@ -330,7 +436,8 @@ document.querySelectorAll<HTMLButtonElement>(".mode-button[data-mode]").forEach(
 
 directionToggle.addEventListener("click", toggleDirection);
 queryElement<HTMLButtonElement>("#resetButton").addEventListener("click", resetSession);
-answerInput.addEventListener("input", handleAnswer);
+answerInput.addEventListener("keydown", handleKeydown);
+answerInput.addEventListener("input", handleTextInput);
 
 document.body.dataset.language = state.language;
 resetSession();
