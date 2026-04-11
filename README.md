@@ -1,38 +1,67 @@
+# TypeBridge
 
-<div align="center">
-<a href="https://github.com/NicoFilips/TypeBridge/">
-  <img src="https://user-images.githubusercontent.com/35654361/295236588-4b750144-774d-454d-b3b1-695a2a96665e.png" alt="Logo" width="200" height="200">
-</a>
-<blockquote>
-  <p>Source: DALL-E 3</p>
-</blockquote>
+TypeBridge is a browser-based keyboard layout trainer for Russian, Ukrainian, and Belarusian layouts.
 
-[![pages-build-deployment](https://github.com/NicoFilips/TypeBridge/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/NicoFilips/TypeBridge/actions/workflows/pages/pages-build-deployment)
+It helps German QWERTZ users practice Cyrillic keyboard positions, and it can also reverse the drill so Cyrillic learners can practice the matching Latin keys.
 
-## About the App 📖
+## Features
 
-This app is designed to help native speakers of Ukrainian 🇺🇦, belarusian🇧🇾 and Russian 🇷🇺 as well as German speakers 🇩🇪 learn each other's keyboard layouts. It's particularly useful for those who have recently arrived in Germany and wish to familiarize themselves with the Latin keyboard layout, or for Germans looking to learn the Cyrillic layout.
+- Russian, Ukrainian, and Belarusian layout practice
+- Latin to Cyrillic and Cyrillic to Latin directions
+- Freeplay and 60-second timed sessions
+- Instant feedback, accuracy, and streak tracking
+- Built-in keyboard reference images
+- Static HTML, CSS, and JavaScript
 
-## Features 🚀
+## Run Locally
 
-- **Language Selection** 🌍: Choose between Russian, Ukrainian, and Belarusian layout to practice the corresponding keyboard layout.
-- **Interactive Training** 💡: Receive immediate visual feedback for each keyboard input, whether correct or incorrect.
-- **Progress Tracking** 📈: Keep an eye on your statistics for right and wrong answers.
-- **Responsive Design** 📱: Learn on any device, whether it's a desktop, tablet, or smartphone.
-- **Reverse Layout** 🧑‍🎓: You can reverse the layout so you can learn one of the cyrillic layouts as well!
+Open `index.html` in a browser.
 
-## Getting Started 🏁
+The checked-in `script.js` is the browser-ready output, so no build step is required for a quick local preview.
 
-Visit our website and start practicing right away! Select your language and follow the on-screen instructions.
+## TypeScript Build
 
-## Support 🆘
+The app source lives in `source/app.ts`.
 
-If you have any questions or need assistance, [open an issue](link-to-issues) on our GitHub page.
+Install dependencies and build:
 
-## Contributing 👥
+```sh
+npm install
+npm run build
+```
 
-If you would like to contribute to the app, please check out our [Contributing Guidelines](link-to-CONTRIBUTING.md).
+The build compiles `source/app.ts` to `script.js`, then copies the static site into `dist/`.
 
-## License 📄
+Useful scripts:
 
-This app is released under the [MIT License](link-to-LICENSE).
+```sh
+npm run typecheck
+npm run build
+```
+
+## GitHub Pages
+
+This repository includes a GitHub Actions workflow at `.github/workflows/pages.yml`.
+
+On pushes to `main`, the workflow:
+
+1. installs Node dependencies,
+2. compiles TypeScript,
+3. copies the static files to `dist/`,
+4. deploys `dist/` to GitHub Pages.
+
+In the repository settings, GitHub Pages should use **GitHub Actions** as the source.
+
+## Project Files
+
+- `index.html`: app markup
+- `style.css`: responsive interface styling
+- `source/app.ts`: typed trainer source
+- `script.js`: compiled browser script
+- `tools/copy-static.mjs`: static build output helper
+- `.github/workflows/pages.yml`: GitHub Pages deployment workflow
+- `src/`: flags and keyboard reference images
+
+## License
+
+Released under the MIT License.

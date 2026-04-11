@@ -1,74 +1,116 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TypeBridge | ТайпБридж</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeBridge</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Container für Partikel-Hintergrund -->
+  <div class="background-motion" aria-hidden="true">
+    <span class="motion-line line-one"></span>
+    <span class="motion-line line-two"></span>
+    <span class="motion-line line-three"></span>
+    <span class="glyph-stream stream-one">Q W E R T Z U I O P</span>
+    <span class="glyph-stream stream-two">Й Ц У К Е Н Г Ш Щ З</span>
+    <span class="glyph-stream stream-three">A S D F G H J K L</span>
+  </div>
+  <main class="app-shell">
+    <section class="trainer" aria-labelledby="appTitle">
+      <div class="topbar">
+        <div>
+          <p class="eyebrow">TypeBridge</p>
+          <h1 id="appTitle">Keyboard layout practice</h1>
+        </div>
+        <div class="timer-block" aria-live="polite">
+          <span class="timer-label">Time</span>
+          <span id="timer">01:00</span>
+        </div>
+      </div>
 
-    <div class="container">
-    <div class="container">
-        <div class="language-selection">
-            <button id="russianLanguage" class="language-button" title="Use Russian keyboard layout">
-                <img src="./src/Flag_of_Russia.png" alt="Russian">
-            </button>
-            <button id="ukrainianLanguage" class="language-button" title="Use Ukrainian keyboard layout">
-                <img src="./src/Flag_of_Ukraine.png" alt="Ukrainian">
-            </button>
-            <button id="belarusianLanguage" class="language-button" title="Use Belarssian keyboard layout">
-                <img src="./src/Flag_of_Belarus.png" alt="Belarusian">
-            </button>
+      <div class="language-grid" role="group" aria-label="Choose language">
+        <button class="language-button active" type="button" data-language="russian" aria-pressed="true">
+          <img src="src/Flag_of_Russia.png" alt="">
+          <span>Russian</span>
+        </button>
+        <button class="language-button" type="button" data-language="ukrainian" aria-pressed="false">
+          <img src="src/Flag_of_Ukraine.png" alt="">
+          <span>Ukrainian</span>
+        </button>
+        <button class="language-button" type="button" data-language="belarusian" aria-pressed="false">
+          <img src="src/Flag_of_Belarus.png" alt="">
+          <span>Belarusian</span>
+        </button>
+      </div>
+
+      <div class="mode-row" role="group" aria-label="Practice mode">
+        <button class="mode-button active" type="button" data-mode="freeplay">Freeplay</button>
+        <button class="mode-button" type="button" data-mode="timed">60 seconds</button>
+        <button id="directionToggle" class="mode-button accent" type="button">Latin to Cyrillic</button>
+      </div>
+
+      <div class="practice-stage" aria-live="polite">
+        <p id="instructionText">Type the matching Cyrillic key.</p>
+        <div id="targetCharacter" class="target-character">Ф</div>
+        <input id="answerInput" class="answer-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="1" aria-label="Type answer">
+        <p id="feedback" class="feedback neutral">Choose a language, then start typing.</p>
+        <div id="solutionPanel" class="solution-panel" hidden>
+          <span>Your answer: <strong id="typedAnswer">-</strong></span>
+          <span>Solution: <strong id="correctAnswer">-</strong></span>
         </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span id="correctCount">0</span>
+          <p>Correct</p>
+        </div>
+        <div class="stat">
+          <span id="wrongCount">0</span>
+          <p>Wrong</p>
+        </div>
+        <div class="stat">
+          <span id="accuracy">100%</span>
+          <p>Accuracy</p>
+        </div>
+        <div class="stat">
+          <span id="streak">0</span>
+          <p>Streak</p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="reference-panel" aria-labelledby="referenceTitle">
+      <div class="reference-header">
         <div>
-            <button id="toggleLayout" title="Select the keyboard Layout which you are currently typing on" disabled >Choose your layout</button>
+          <p class="eyebrow">Reference</p>
+          <h2 id="referenceTitle">Russian layout</h2>
         </div>
-        <div>
-            <button class="game-button" id="oneMinuteMode">60 Seconds</button>
-            <button class="game-button" id="freeplayMode">Freeplay</button>
-            <button class="game-button" id="freeplayMode2">Custom</button>
-            <div id="timer" class="timer">
-                01:00
-            </div>                
-        </div>
-        
-    </div>
-    <div class="container">
-        <h1>Practice your Keyboard layout skills!</h1>
-        <h1 id="headerTitle">Практикуйте свои навыки раскладки клавиатуры!</h1>
-        <div id="wordDisplay"></div>
-        <input type="text" disabled="true" id="userInput"/>
-            <div id="feedback"></div>
-        <div id="scoreBoard">
-            <p>
-                <span id="correctLabel">Correct:</span> 
-                <span id="correctCount">0</span>
-            </p>
-            <p>
-                <span id="incorrectLabel">Correct:</span> 
-                <span id="incorrectCount">0</span>
-            </p>
-            <button id="toggleImageContainer">Toggle Image Container</button>
-        </div>
-    </div>
-    
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Times up!</h2>
-            <p id="ModalInfo1"></p>
-            <p id="ModalInfo2"></p>
-            <p id="ModalInfo3"></p>
-        </div>
-    </div>
-    
-</div>
-<div id="imageContainer" class="hidden">
-    <img id="myImage" src="src/KB_Russian.png" alt="Beschreibung des Bildes">
-</div>
-    <script src="script.js"></script>
+        <button id="resetButton" class="reset-button" type="button">Reset</button>
+      </div>
+      <img id="keyboardImage" class="keyboard-image" src="src/KB_Russian.png" alt="Russian keyboard layout">
+      <div class="hint-list">
+        <p id="directionHint"><strong>Current drill:</strong> Latin to Cyrillic.</p>
+        <p><strong>Latin to Cyrillic:</strong> press the Latin key for the shown Cyrillic letter.</p>
+        <p><strong>Cyrillic to Latin:</strong> type the Latin key that produces the shown Cyrillic letter.</p>
+      </div>
+    </aside>
+  </main>
+
+  <dialog id="resultDialog" class="result-dialog">
+    <form method="dialog">
+      <p class="eyebrow">Session complete</p>
+      <h2>Nice run</h2>
+      <p id="resultSummary"></p>
+      <div class="result-stats">
+        <span id="resultCorrect">0 correct</span>
+        <span id="resultWrong">0 wrong</span>
+        <span id="resultAccuracy">0% accuracy</span>
+      </div>
+      <button class="reset-button" value="close">Close</button>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
 </body>
 </html>
-

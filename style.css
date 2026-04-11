@@ -1,336 +1,732 @@
+:root {
+  color-scheme: light;
+  --bg: #f4f7fb;
+  --ink: #151b1f;
+  --muted: #64707a;
+  --panel: #ffffff;
+  --line: #d8e1e8;
+  --green: #167456;
+  --red: #c7433d;
+  --yellow: #f4c542;
+  --blue: #1f78a8;
+  --accent: #167456;
+  --accent-two: #f4c542;
+  --accent-three: #c7433d;
+  --accent-soft: #e4f3ec;
+  --accent-glass: rgba(228, 243, 236, 0.6);
+  --shadow: 0 24px 70px rgba(21, 27, 31, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  color: var(--ink);
+  background:
+    linear-gradient(112deg, rgba(31, 120, 168, 0.22), transparent 34%),
+    linear-gradient(248deg, rgba(244, 197, 66, 0.24), transparent 36%),
+    linear-gradient(180deg, rgba(22, 116, 86, 0.12), transparent 58%),
+    var(--bg);
+  overflow-x: hidden;
 }
 
-#wordDisplay {
-    font-size: 2em;
-    margin-bottom: 20px;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 0 12%, rgba(21, 27, 31, 0.05) 12% 12.2%, transparent 12.2% 100%),
+    linear-gradient(0deg, transparent 0 16%, rgba(21, 27, 31, 0.04) 16% 16.2%, transparent 16.2% 100%);
+  background-size: 120px 120px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 80%);
 }
 
-#userInput {
-    font-size: 1.5em;
-    padding: 10px;
+body[data-language="russian"] {
+  --accent: #1f5fbf;
+  --accent-two: #ffffff;
+  --accent-three: #c7433d;
+  --accent-soft: #e6efff;
+  --accent-glass: rgba(230, 239, 255, 0.6);
 }
 
-#feedback {
-    margin-top: 20px;
-    font-size: 1.2em;
+body[data-language="ukrainian"] {
+  --accent: #1f78a8;
+  --accent-two: #f4c542;
+  --accent-three: #167456;
+  --accent-soft: #e5f4fb;
+  --accent-glass: rgba(229, 244, 251, 0.6);
 }
 
-#scoreBoard {
-    margin-top: 20px;
+body[data-language="belarusian"] {
+  --accent: #167456;
+  --accent-two: #ffffff;
+  --accent-three: #c7433d;
+  --accent-soft: #e4f3ec;
+  --accent-glass: rgba(228, 243, 236, 0.6);
 }
 
-#scoreBoard p {
-    font-size: 1.1em;
+button,
+input {
+  font: inherit;
 }
 
-/* Stelle sicher, dass dieser Code zu deiner vorhandenen style.css Datei hinzugefügt wird. */
+button {
+  border: 0;
+}
 
-.language-selection {
-    margin: 20px;
-    display: flex;
-    justify-content: center;
+.background-motion {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.motion-line {
+  position: absolute;
+  left: -20%;
+  width: 140%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-two), var(--accent-three), transparent);
+  opacity: 0.34;
+  transform: rotate(-12deg);
+  animation: slideLine 12s linear infinite;
+}
+
+.line-one {
+  top: 16%;
+}
+
+.line-two {
+  top: 46%;
+  animation-duration: 16s;
+  animation-direction: reverse;
+}
+
+.line-three {
+  top: 76%;
+  animation-duration: 20s;
+}
+
+.glyph-stream {
+  position: absolute;
+  left: -20%;
+  color: rgba(21, 27, 31, 0.1);
+  font-size: clamp(2.6rem, 9vw, 7rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  white-space: nowrap;
+  animation: driftGlyphs 28s linear infinite;
+}
+
+.stream-one {
+  top: 4%;
+}
+
+.stream-two {
+  top: 56%;
+  animation-duration: 34s;
+  animation-direction: reverse;
+}
+
+.stream-three {
+  top: 82%;
+  animation-duration: 31s;
+}
+
+.app-shell {
+  position: relative;
+  width: min(1180px, calc(100% - 32px));
+  min-height: 100vh;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+  gap: 24px;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.trainer,
+.reference-panel {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px) saturate(1.35);
+}
+
+.trainer::before,
+.reference-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 7px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-two), var(--accent-three));
+  background-size: 180% 100%;
+  animation: accentFlow 9s ease-in-out infinite;
+}
+
+.trainer {
+  padding: 34px;
+}
+
+.reference-panel {
+  align-self: stretch;
+  padding: 28px;
+}
+
+.topbar,
+.reference-header,
+.stats-row,
+.mode-row,
+.language-grid {
+  display: flex;
+  gap: 12px;
+}
+
+.topbar,
+.reference-header {
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: clamp(2rem, 7vw, 4.8rem);
+  line-height: 0.94;
+  letter-spacing: 0;
+  max-width: 720px;
+}
+
+h2 {
+  margin-bottom: 0;
+  font-size: 1.25rem;
+}
+
+.timer-block {
+  min-width: 112px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.42);
+  box-shadow: inset 0 -4px 0 rgba(21, 27, 31, 0.06);
+}
+
+.timer-block.warning {
+  border-color: rgba(199, 67, 61, 0.5);
+  background: #fff0ef;
+}
+
+.timer-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+#timer {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.55rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.language-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 32px;
+}
+
+.language-button,
+.mode-button,
+.reset-button {
+  min-height: 46px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
 .language-button {
-    border: none;
-    border-radius: 5px; /* leicht abgerundete Ecken */
-    margin: 0 10px; /* Abstand zwischen den Buttons */
-    width: 50px; /* Breite der Flaggen-Buttons */
-    height: 30px; /* Höhe der Flaggen-Buttons */
-    cursor: pointer; /* Cursor ändern, wenn man über den Button hovert */
-    background-size: cover; /* sorgt dafür, dass die Flaggen das gesamte Element ausfüllen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.46);
+  color: var(--ink);
+  font-weight: 800;
 }
 
 .language-button img {
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
+  width: 34px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid rgba(23, 32, 27, 0.16);
 }
 
-/* CSS für die Schriftgrößen */
-h1 {
-    font-size: 24px; /* oder eine andere Größe nach Wunsch */
-    margin-bottom: 15px;
+.language-button.active {
+  border-color: var(--accent);
+  background: var(--accent-glass);
+  box-shadow: inset 0 -4px 0 rgba(21, 27, 31, 0.07);
 }
 
-#wordDisplay {
-    font-size: 32px; /* Größe für das angezeigte Wort */
-    margin-bottom: 20px;
+.language-button[data-language="russian"].active {
+  color: #123e82;
 }
 
-#userInput {
-    font-size: 20px; /* Größe für das Eingabefeld */
-    margin-bottom: 10px;
+.language-button[data-language="ukrainian"].active {
+  color: #145a7e;
 }
 
-#scoreBoard p {
-    font-size: 18px; /* Größe für den Punktestand */
+.language-button[data-language="belarusian"].active {
+  color: #145e49;
 }
 
-/* Responsive Design für kleinere Bildschirme */
-@media (max-width: 768px) {
-    h1 {
-        font-size: 20px;
-    }
-    #wordDisplay {
-        font-size: 28px;
-    }
-    #userInput {
-        font-size: 18px;
-    }
-    #scoreBoard p {
-        font-size: 16px;
-    }
+.mode-row {
+  flex-wrap: wrap;
+  margin-top: 14px;
 }
 
-@keyframes backgroundAnimation {
-    0% {
-        background-color: #f0f0f0;
-    }
-    50% {
-        background-color: #e0e0e0;
-    }
-    100% {
-        background-color: #f0f0f0;
-    }
+.mode-button,
+.reset-button {
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.46);
+  color: var(--ink);
+  font-weight: 800;
 }
 
-body {
-    animation: backgroundAnimation 10s infinite;
+.mode-button.active,
+.mode-button.accent {
+  background: var(--ink);
+  color: #ffffff;
 }
 
-.container {
-    background-color: rgba(255, 255, 255, 0.8); /* leicht transparenter Weiß für den Container */
-    padding: 20px;
-    border-radius: 10px; /* leicht abgerundete Ecken für den Container */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für den Container */
-    max-width: 800px; /* Maximale Breite des Containers */
-    margin: 20px auto; /* Zentriert den Container horizontal und gibt mindestens 20px Abstand nach oben und unten */
-    width: calc(100% - 40px); /* Breite des Containers minus 40px für den Abstand links und rechts */
-    text-align: center;
-    border: 1px solid gray; /* Schwarzer Rand um den Container */
+.mode-button.accent {
+  background: linear-gradient(135deg, var(--accent), var(--accent-three));
 }
 
-@media (max-width: 600px) {
-    .container {
-        padding: 10px; /* Weniger Padding auf kleineren Bildschirmen */
-        margin: 10px auto; /* Weniger Abstand auf kleineren Bildschirmen */
-        width: calc(100% - 20px); /* Anpassung der Breite auf kleineren Bildschirmen */
-    }
+.mode-button:hover,
+.language-button:hover,
+.reset-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(21, 27, 31, 0.1);
 }
 
-
-
-@keyframes gradientAnimation {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+.practice-stage {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  margin-top: 32px;
+  padding: 34px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background:
+    repeating-linear-gradient(90deg, rgba(21, 27, 31, 0.04) 0 1px, transparent 1px 36px),
+    repeating-linear-gradient(0deg, rgba(21, 27, 31, 0.035) 0 1px, transparent 1px 36px),
+    rgba(255, 255, 255, 0.32);
+  background-position: 0 0, 0 0, 0 0;
+  animation: keyGrid 18s linear infinite;
 }
 
-body {
-    background: linear-gradient(-45deg, #84fab0, #8fd3f4, #a18cd1, #fbc2eb);
-    background-size: 400% 400%;
-    animation: gradientAnimation 15s ease infinite;
+.practice-stage::before,
+.practice-stage::after {
+  content: "";
+  position: absolute;
+  top: 118px;
+  width: min(19%, 150px);
+  height: 8px;
+  border-radius: 8px;
+  background: var(--accent);
+  animation: pulseBridge 2.8s ease-in-out infinite;
 }
 
-@keyframes ukrainianGradientAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+.practice-stage::before {
+  left: 18px;
 }
 
-.ukrainian-background {
-    background: linear-gradient(-225deg,
-        #0057b7 35%, /* Blau bis zur Hälfte */
-        #ffd700 65%); /* Gelb ab der Hälfte */
-    background-size: 150% 150%;
-    animation: ukrainianGradientAnimation 15s ease infinite;
+.practice-stage::after {
+  right: 18px;
+  background: var(--accent-three);
+  animation-delay: 500ms;
 }
 
-@keyframes russianGradientAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+#instructionText {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-weight: 700;
+  text-align: center;
 }
 
-.russian-background {
-    background: linear-gradient(225deg,
-    #ffffff 20%,
-    #0033a0 45% 55%,
-    #d52b1e 80%);
-    background-size: 150% 150%;
-    animation: russianGradientAnimation 15s ease infinite;
+.target-character {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 360px);
+  min-height: 190px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.42), transparent 32%),
+    linear-gradient(145deg, var(--accent-two), var(--yellow));
+  color: var(--ink);
+  font-size: clamp(5rem, 24vw, 10rem);
+  line-height: 1;
+  font-weight: 800;
+  box-shadow: inset 0 -8px 0 rgba(23, 32, 27, 0.08);
+  transition: transform 180ms ease, background 180ms ease;
+  animation: characterFloat 4s ease-in-out infinite;
 }
 
-@keyframes belarusianGradientAnimation {
-    0% { background-position: 50% 0%; }
-    50% { background-position: 50% 100%; }
-    100% { background-position: 50% 0%; }
+.target-character.correct {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.44), transparent 34%),
+    #67d49f;
 }
 
-.belarusian-background {
-    background: linear-gradient(to bottom, 
-                #d22730 60%, /* Rot */
-                #4aa657 60%), /* Grün */
-                linear-gradient(to right, 
-                white 0%, 
-                transparent 10%); /* Weißer Streifen links mit sanftem Übergang */
-    background-size: 100% 150%, 100% 100%;
-    animation: belarusianGradientAnimation 15s ease infinite;
-    position: relative;
+.target-character.wrong {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.44), transparent 34%),
+    #f08a7f;
 }
 
+.answer-input {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 360px);
+  height: 58px;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.58);
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  outline: none;
+}
 
-#particles-js {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #b61924; /* Oder eine andere Hintergrundfarbe nach Wahl */
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 50% 50%;
-    z-index: -1; /* Stellt sicher, dass es hinter deinem Inhalt liegt */
+.answer-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(31, 120, 168, 0.12);
+}
+
+.answer-input.correct {
+  border-color: var(--green);
+  background: #e7f4ee;
+  animation: bump 220ms ease;
+}
+
+.answer-input.wrong {
+  border-color: var(--red);
+  background: #fff0ef;
+  animation: shake 180ms ease;
+}
+
+.feedback {
+  min-height: 24px;
+  margin-bottom: 0;
+  font-weight: 800;
+  text-align: center;
+}
+
+.feedback.neutral {
+  color: var(--muted);
+}
+
+.feedback.correct {
+  color: var(--green);
+}
+
+.feedback.wrong {
+  color: var(--red);
+}
+
+.solution-panel {
+  width: min(100%, 520px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid rgba(199, 67, 61, 0.25);
+  border-radius: 8px;
+  background: #fff6f4;
+}
+
+.solution-panel[hidden] {
+  display: none;
+}
+
+.solution-panel span {
+  min-height: 42px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.58);
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.solution-panel strong {
+  color: var(--ink);
+  font-size: 1.35rem;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.stat {
+  min-height: 86px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.42);
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.stat:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+}
+
+.stat span {
+  font-size: 1.8rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.stat p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.keyboard-image {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 0 6px #f6f9fb;
+}
+
+.hint-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.hint-list p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+#directionHint {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--accent-glass);
+  color: var(--ink);
+}
+
+.result-dialog {
+  width: min(420px, calc(100% - 32px));
+  border: 0;
+  border-radius: 8px;
+  padding: 0;
+  box-shadow: var(--shadow);
+}
+
+.result-dialog::backdrop {
+  background: rgba(23, 32, 27, 0.45);
+}
+
+.result-dialog form {
+  padding: 24px;
+  border: 1px solid var(--line);
+}
+
+.result-stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.result-stats span {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #f3f7fa;
+  font-weight: 800;
+}
+
+.result-dialog button {
+  margin-top: 12px;
+}
+
+@keyframes bump {
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes accentFlow {
+  50% {
+    background-position: 100% 0;
+  }
+}
+
+@keyframes slideLine {
+  from {
+    transform: translateX(-10%) rotate(-12deg);
   }
 
-
-  #controls {
-    display: flex; /* Aktiviert Flexbox */
-    align-items: center; /* Zentriert die Elemente vertikal */
-    justify-content: space-around; /* Verteilt die Elemente gleichmäßig im Container */
+  to {
+    transform: translateX(10%) rotate(-12deg);
+  }
 }
 
-#wordDisplay {
-    margin-right: 10px; /* Fügt einen rechten Abstand zum Button hinzu */
+@keyframes driftGlyphs {
+  from {
+    transform: translateX(-8%);
+  }
+
+  to {
+    transform: translateX(28%);
+  }
 }
 
-
-#toggleLayout {
-    padding: 5px 10px; /* Fügt Innenabstand hinzu */
-    border: none; /* Entfernt den Standardrahmen */
-    background-color: #4CAF50; /* Hintergrundfarbe */
-    color: white; /* Textfarbe */
-    cursor: pointer; /* Ändert den Mauszeiger, um Klickbarkeit anzuzeigen */
+@keyframes keyGrid {
+  to {
+    background-position: 72px 0, 0 72px, 0 0;
+  }
 }
 
-#toggleLayout:hover {
-    background-color: #45a049; /* Dunklere Hintergrundfarbe beim Hover */
+@keyframes pulseBridge {
+  50% {
+    transform: scaleX(0.82);
+    opacity: 0.65;
+  }
 }
 
-.overlay-container {
-    position: relative;
-    width: 100%; /* oder eine spezifische Breite */
-    height: 100%; /* oder eine spezifische Höhe */
+@keyframes characterFloat {
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
-.overlay-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%; /* Stellen Sie sicher, dass es die gesamte Containerbreite einnimmt */
-    height: 100%; /* Optional, je nach Bedarf */
-    /* Weitere Stilisierung nach Bedarf */
+@keyframes shake {
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
 }
 
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px; /* Abstand zwischen den Buttons */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
 }
 
-.game-button {
-    background-color: #3c59b8; /* Grüne Hintergrundfarbe */
-    color: white; /* Weiße Textfarbe */
-    border: none; /* Keine Grenze */
-    padding: 15px 32px; /* Vertikales und horizontales Padding */
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s; /* Animationsdauer für den Hover-Effekt */
-    cursor: pointer; /* Cursor als Zeiger */
-    border-radius: 5px; /* Leicht abgerundete Ecken */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Leichter Schatten für Tiefe */
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
 }
 
-.game-button:hover {
-    background-color: white; /* Hintergrundfarbe beim Hover */
-    color: #3c59b8; /* Textfarbe beim Hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Stärkerer Schatten beim Hover */
-}
+@media (max-width: 620px) {
+  .app-shell {
+    width: min(100% - 20px, 1180px);
+    padding: 10px 0;
+    gap: 10px;
+  }
 
-.game-button.active {
-    background-color: #8fd3f4; /* Dunklere Hintergrundfarbe für den aktiven Button */
-    color: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset; /* Innen-Schatten für den eingedrückten Effekt */
-}
+  .trainer,
+  .reference-panel {
+    padding: 16px;
+  }
 
-.timer {
-    font-size: 2em; /* Große Schrift für den Timer */
-    margin: 20px; /* Etwas Abstand um den Timer */
-    padding: 10px;
-    background: #ddd; /* Hintergrundfarbe */
-    border-radius: 5px; /* Abgerundete Ecken */
-    display: inline-block;
-    width: 100px; /* Breite des Timer-Elements */
-    text-align: center;
-}
-
-
-
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.4); 
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; 
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; 
-}
-
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.hidden {
+  .practice-stage::before,
+  .practice-stage::after {
     display: none;
-}
+  }
 
-.visible {
-    display: block; /* oder display: flex; oder ein anderes display property, je nach Bedarf */
+  .topbar,
+  .reference-header {
+    flex-direction: column;
+  }
+
+  .timer-block {
+    width: 100%;
+  }
+
+  .language-grid,
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .language-button {
+    justify-content: flex-start;
+  }
+
+  .mode-button,
+  .reset-button {
+    flex: 1 1 150px;
+  }
+
+  .target-character {
+    min-height: 150px;
+  }
+
+  .solution-panel {
+    grid-template-columns: 1fr;
+  }
 }

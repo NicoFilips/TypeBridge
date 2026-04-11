@@ -1,0 +1,13 @@
+{
+  "name": "typebridge",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "build": "tsc --project tsconfig.json && node tools/copy-static.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
